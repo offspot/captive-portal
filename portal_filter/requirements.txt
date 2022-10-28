@@ -1,0 +1,3 @@
+scapy==2.4.5
+# nftables should be system-provided as its a ctype binding over libnftables
+nftables
