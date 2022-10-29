@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'fira_sansbold';
+    src: url('./font/FiraSans-Bold.eot');
+    src: url('./font/FiraSans-Bold.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Bold.woff') format('woff'),
+         url('./font/FiraSans-Bold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'fira_sansregular';
+    src: url('./font/FiraSans-Regular.eot');
+    src: url('./font/FiraSans-Regular.eot?#iefix') format('embedded-opentype'),
+         url('./font/FiraSans-Regular.woff') format('woff'),
+         url('./font/FiraSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(61, 146, 201);
+}
+a:hover,
+a:focus {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: initial;
+    padding-left: 1em;
+}
+
+code {
+    white-space: nowrap;
+    font-size: .875em;
+    color: #d63384;
+    word-wrap: break-word;
+}
+
+.pure-g [class*="pure-u"] {
+  font-family: 'fira_sansregular', sans-serif !important;
+}
+
+.pure-button {
+    border-radius: .3rem;
+}
+
+.pure-button-primary {
+    padding: 1rem 2rem;
+}
+
+header {
+    display: -webkit-flex;
+    display: flex;
+    width: 100%;
+    padding: 1em .5em;
+    background-color: #fefefe;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 40px;
+}
+
+header * img {
+    max-width: 50%;
+    height: auto;
+}
+
+
+.content {
+    padding: 1em 1em 0;
+}
+
+svg.copy {
+    vertical-align: text-center;
+    margin-right: 4px;
+    display: inline-block;
+    overflow: visible !important;
+    fill: currentColor;
+}
+
+
+footer {
+    padding: .5em;
+    color: #fefefe;
+    background-color: #95A5A6;
+    margin-top: 3em;
+    width: 100%;
+    height: auto;
+    min-height: 4.5rem;
+    text-align: center;
+}

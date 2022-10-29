@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>{{ hotspot_name }}</title>
+        <link rel="icon" href="/assets/favicon.png">
+        <link rel="stylesheet" type="text/css" href="/assets/pure-min.css" />
+        <link rel="stylesheet" type="text/css" href="/assets/portal.css" />
+        <script src="/assets/clipboard.min.js"></script>
+    </head>
+    <body class="pure-g">
+        <header>
+          <a href="/">
+            <img class="" src="/assets/logo.png"></img>
+          </a>
+        </header>
+        <div class="content pure-u-1 pure-u-md-3-4">
+          {% block content %}{% endblock %}
+        </div>
+        <footer>
+          {% if footer_note %}<p>{{ footer_note }}</p>{% endif %}
+        </footer>
+        <script type="text/javascript">
+(function(exports, d) {
+  function domReady(fn, context) {
+
+    function onReady(event) {
+      d.removeEventListener("DOMContentLoaded", onReady);
+      fn.call(context || exports, event);
+    }
+
+    function onReadyIe(event) {
+      if (d.readyState === "complete") {
+        d.detachEvent("onreadystatechange", onReadyIe);
+        fn.call(context || exports, event);
+      }
+    }
+
+    d.addEventListener && d.addEventListener("DOMContentLoaded", onReady) ||
+    d.attachEvent      && d.attachEvent("onreadystatechange", onReadyIe);
+  }
+
+  exports.domReady = domReady;
+})(window, document);
+        </script>
+        <script type="text/javascript">domReady(function(event) {
+        new ClipboardJS('.clipboard');
+        {% block js %}{% endblock %}
+    });</script>
+    </body>
+</html>
