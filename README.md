@@ -2,7 +2,7 @@
 
 A python web-app to support the UI of our home-portal image.
 
-[![CodeFactor](https://www.codefactor.io/repository/github/offspot/home-portal-app/badge)](https://www.codefactor.io/repository/github/offspot/home-portal-app)
+[![CodeFactor](https://www.codefactor.io/repository/github/offspot/captive-portal/badge)](https://www.codefactor.io/repository/github/offspot/captive-portal)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 This is an adaptation of [IIAB](https://internet-in-a-box.org/)'s [captive-portal feature](https://github.com/iiab/iiab/blob/master/roles/captiveportal/README.md) for [Kiwix](https://kiwix.org) Hotspot.
