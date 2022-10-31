@@ -94,6 +94,8 @@ Most captive-portal have for goal to prevent all internet access until the capti
 
 To trigger the UI, we redirect all HTTP/s requests to our IP on port `2080`/`2443` within a defined network until the client's IP is added to a special chain.
 
+**Note**: This assumes this computer is a gateway for those WiFi clients, providing a WiFi Access Points, IPs, routing and DNS.
+
 ## behavior
 
 - http/s packets from captured networks and not for hotspot are sent to `CAPTIVE_HTTP` and `CAPTIVE_HTTPS` chains
