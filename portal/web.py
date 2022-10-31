@@ -101,6 +101,13 @@ class Request:
         return f"{self.req.url} from {self.ip_addr}/{self.hw_addr} via {self.ua}"
 
 
+def action_required(user: User) -> bool:
+    """whether on a platform that will require him to copy/paste URL manually"""
+    # apple brings a popup that allows link (target=_system) to open a browser
+    # windows just opens a full regular browser
+    return user.platform.lower() not in ("apple", "macos", "iphone", "ipad", "windows")
+
+
 @app.route("/", defaults={"u_path": ""})
 @app.route("/<path:u_path>")
 def entrypoint(u_path):
@@ -115,7 +122,7 @@ def entrypoint(u_path):
         logger.debug(f"user is registered ({user.registered_on}) but NOT ACTIVE")
     elif user.is_active:
         logger.debug("is NOT registered but IS ACTIVE")
-    context = {"user": user, "action_required": not user.is_apple}
+    context = {"user": user, "action_required": action_required(user)}
     context.update(get_branding_context())
     return render_template("portal.html", **context)
 
@@ -124,7 +131,7 @@ def entrypoint(u_path):
 def fake_register():
     """just display registered page, for UI testing purpose"""
     user = Request(request).get_user()
-    context = {"user": user, "action_required": not user.is_apple}
+    context = {"user": user, "action_required": action_required(user)}
     context.update(get_branding_context())
     return render_template("registered.html", **context)
 
@@ -135,7 +142,7 @@ def register():
     user = Request(request).get_user()
     user.register()
     ack_client_registration(user.ip_addr)
-    context = {"user": user, "action_required": not user.is_apple}
+    context = {"user": user, "action_required": action_required(user)}
     context.update(get_branding_context())
     return render_template("registered.html", **context)
 

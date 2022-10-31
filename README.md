@@ -40,6 +40,7 @@ Version `1.0.0` has been tested with the following platforms
 | Firefox 106            | ✅            |                     |
 | Android 13             | ✅            |                     |
 | Windows 10 20H2        | ✅            |                     |
+| Windows 11 21H2        | ✅            |                     |
 
 Should you encounter a system for which it doesn't work, please [Open a ticket](https://github.com/offspot/home-portal-app/issues/new/choose) specifying the System and its Version.
 

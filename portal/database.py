@@ -48,10 +48,6 @@ class User(peewee.Model):
     def is_active(self) -> bool:
         return is_client_active(ip_addr=self.ip_addr)
 
-    @property
-    def is_apple(self) -> bool:
-        return self.platform.lower() in ("apple", "macos", "iphone", "ipad")
-
     def register(self, delay: Optional[int] = 0):
         self.registered_on = datetime.datetime.now() + datetime.timedelta(seconds=delay)
         self.save()
