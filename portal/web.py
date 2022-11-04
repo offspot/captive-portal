@@ -1,8 +1,9 @@
 import re
+from typing import Union
 
 import flask
 import werkzeug
-from flask import Flask, render_template, request
+from flask import Flask, Response, make_response, render_template, request
 from flask_babel import Babel
 from user_agents import parse
 
@@ -18,6 +19,13 @@ app.config["BABEL_DOMAIN"] = "messages"
 babel = Babel(app)
 get_identifier_for = Conf.get_filter_func("get_identifier_for")
 ack_client_registration = Conf.get_filter_func("ack_client_registration")
+
+
+def std_resp(resp: Union[Response, str]) -> Response:
+    if isinstance(resp, str):
+        resp = make_response(resp)
+    resp.headers["Cache-Control"] = "public,must-revalidate,max-age=0,s-maxage=3600"
+    return resp
 
 
 @babel.localeselector
@@ -114,26 +122,32 @@ def entrypoint(u_path):
     req = Request(request)
     logger.info(f"IN: {req}")
     user = req.get_user()
+    context = dict(
+        user=user, action_required=action_required(user), **get_branding_context()
+    )
 
     if user.is_registered and user.is_active:
         logger.debug(f"user IS registered ({user.registered_on})")
-        return platform_success(request, user)
+        return std_resp(
+            platform_success(request, user)
+            or render_template("registered.html", **context)
+        )
     elif user.is_registered:
         logger.debug(f"user is registered ({user.registered_on}) but NOT ACTIVE")
     elif user.is_active:
         logger.debug("is NOT registered but IS ACTIVE")
-    context = {"user": user, "action_required": action_required(user)}
-    context.update(get_branding_context())
-    return render_template("portal.html", **context)
+
+    return std_resp(render_template("portal.html", **context))
 
 
 @app.route("/fake-register")
 def fake_register():
     """just display registered page, for UI testing purpose"""
     user = Request(request).get_user()
-    context = {"user": user, "action_required": action_required(user)}
-    context.update(get_branding_context())
-    return render_template("registered.html", **context)
+    context = dict(
+        user=user, action_required=action_required(user), **get_branding_context()
+    )
+    return std_resp(render_template("registered.html", **context))
 
 
 @app.route("/register")
@@ -142,12 +156,13 @@ def register():
     user = Request(request).get_user()
     user.register()
     ack_client_registration(user.ip_addr)
-    context = {"user": user, "action_required": action_required(user)}
-    context.update(get_branding_context())
-    return render_template("registered.html", **context)
+    context = dict(
+        user=user, action_required=action_required(user), **get_branding_context()
+    )
+    return std_resp(render_template("registered.html", **context))
 
 
 @app.route("/assets/<path:path>")
 def send_static(path):
     """serve static files during devel (deployed reverseproxy)"""
-    return flask.send_from_directory(Conf.root.joinpath("assets"), path)
+    return std_resp(flask.send_from_directory(Conf.root.joinpath("assets"), path))

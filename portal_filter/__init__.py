@@ -22,21 +22,29 @@ import logging
 import os
 import platform
 import subprocess
+import time
 from typing import List, Optional, Tuple
 
 if platform.system() != "Linux":
     raise NotImplementedError(f"{platform.system()} is not supported. Linux only")
 
 import nftables
-import scapy.all
+try:
+    import scapy.all
+except OSError as exc:
+    print(f"{exc} -- RETRYING")
+    time.sleep(5)
+    import scapy.all
+
 
 logging.basicConfig(level=logging.DEBUG if os.getenv("DEBUG") else logging.INFO)
 logger = logging.getLogger("portal-filter")
 
-PORTAL_IP = os.getenv("HOTSPOT_IP", "192.168.2.1")
-HTTP_PORT = int(os.getenv("HTTP_PORT", "2080"))
-HTTPS_PORT = int(os.getenv("HTTP_PORT", "2443"))
-CAPTURED_NETWORKS = os.getenv("CAPTURED_NETWORKS", "").split("|")
+PORTAL_IP: str = os.getenv("HOTSPOT_IP", "192.168.2.1")
+HTTP_PORT: int = int(os.getenv("HTTP_PORT", "2080"))
+HTTPS_PORT: int = int(os.getenv("HTTP_PORT", "2443"))
+CAPTURED_NETWORKS: List[str] = os.getenv("CAPTURED_NETWORKS", "").split("|")
+ALWAYS_ONLINE: bool = bool(os.getenv("ALWAYS_ONLINE", ""))
 
 ######################
 # portal-filter API: start
@@ -56,6 +64,10 @@ def ack_client_registration(ip_addr: str) -> bool:
     """whether ip_addr has been added to CAPTIVE_PASSLIST chain (if not present)
 
     rule is INSERTED so it's passed before the end-of-chain's RETURN"""
+
+    # dont add rule should the system be offline
+    if not ALWAYS_ONLINE and not system_is_online():
+        return False
 
     # check that it's not already present
     if ip_in_passlist(ip_addr):
@@ -86,10 +98,26 @@ def is_client_active(ip_addr: str) -> bool:
     """whether one can consider this client active"""
     if not is_valid_ip(ip_addr):
         return False
-    return ip_in_passlist(ip_addr) and has_active_connection(ip_addr)
+
+    return has_active_connection(ip_addr)
+
+    # # dont look into passlist when system is offline
+    # if not ALWAYS_ONLINE and not system_is_online():
+    #     return has_active_connection(ip_addr)
+
+    # return ip_in_passlist(ip_addr) and has_active_connection(ip_addr)
 
 
 ######################
+
+def system_is_online() -> bool:
+    """whether system has internet connectivity"""
+    try:
+        with open("/var/run/internet", "r") as fh:
+            return fh.read().strip() == "online"
+    except Exception as exc:
+        logger.error(f"cannot read connectivity status: {exc}")
+        return False
 
 
 class NftResult(collections.namedtuple("NftResult", ["rc", "output", "error"])):

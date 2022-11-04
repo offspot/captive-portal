@@ -23,7 +23,7 @@ You are invited to reuse this app on your portal project, mostly because it hold
 - this response is usually displayed in an ad-hoc popup/window upon WiFi connection and allow closing/close-itself upon certain condition.
 - the app records (in an SQLite DB) that it has seen this User using it's MAC address and IP address.
 - upon *confirmation* by User, it *registers* him by setting a registration date on the record and request the *filter module* to allow traffic.
-- User's system detects that it it no longer *blocked* and finishes the popup session.
+- Either User's system detects that it it no longer *blocked* (in case the server is connected to Internet) or receives the faked *Expected Success Response* and finishes the popup session.
 
 ## compatibility
 
@@ -65,7 +65,7 @@ Configuration is done solely via environment variables
 
 - **Inactive** clients are devices that stopped making network connections. On modern systems, this usually not happens as most OS phone home frequently (including for captive portal detection!). This is thus mostly used to detect *disconnected* or *sleeping* devices.
 - We do this because we assume devices can be shared by multiple users who might not know our main content URL.
-- App is somewhat flexible regarding the *filter module*. we only use and tested the `portal_filter` one but the default (dummy) one is much useful during portal-UI development.
+- App is somewhat flexible regarding the *filter module*. We only use and tested the `portal_filter` one but the default (dummy) one is much useful during portal-UI development.
 
 ## [dev] i18n updates
 
@@ -144,3 +144,4 @@ Configuration is done solely via environment variables
 | `CAPTURED_NETWORKS`  |               | List of `|` separated networks to limit *capture* to. Otherwise any traffic |
 | `HTTP_PORT`          | `2080`        | Port to redirect captured HTTP traffic to on *HOTSPOT_IP*                   |
 | `HTTPS_PORT`         | `2443`        | Port to redirect captured HTTPS traffic to on *HOTSPOT_IP*                  |
+| `ALWAYS_ONLINE`      |               | Assumes system should be connected to Internet and route traffic            |
