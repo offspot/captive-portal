@@ -11,24 +11,7 @@ from portal.constants import Conf
 from portal.database import User
 from portal.platforms import success as platform_success
 
-logger = Conf.logger
-app = Flask(Conf.logger.name, template_folder=Conf.root.joinpath("templates"))
-app.config["BABEL_DEFAULT_LOCALE"] = "en"
-app.config["BABEL_TRANSLATION_DIRECTORIES"] = str(Conf.root.joinpath("locale"))
-app.config["BABEL_DOMAIN"] = "messages"
-babel = Babel(app)
-get_identifier_for = Conf.get_filter_func("get_identifier_for")
-ack_client_registration = Conf.get_filter_func("ack_client_registration")
 
-
-def std_resp(resp: Union[Response, str]) -> Response:
-    if isinstance(resp, str):
-        resp = make_response(resp)
-    resp.headers["Cache-Control"] = "public,must-revalidate,max-age=0,s-maxage=3600"
-    return resp
-
-
-@babel.localeselector
 def get_locale():
     """select locale from HTTP Accept-Languages header value
 
@@ -40,6 +23,27 @@ def get_locale():
         ).best_match(supported_languages)
     except Exception:
         return supported_languages[-1]
+
+
+logger = Conf.logger
+app = Flask(Conf.logger.name, template_folder=Conf.root.joinpath("templates"))
+babel = Babel(
+    app,
+    default_locale="en",
+    default_domain="messages",
+    default_translation_directories=str(Conf.root.joinpath("locale")),
+    default_timezone="UTC",
+    locale_selector=get_locale,
+)
+get_identifier_for = Conf.get_filter_func("get_identifier_for")
+ack_client_registration = Conf.get_filter_func("ack_client_registration")
+
+
+def std_resp(resp: Union[Response, str]) -> Response:
+    if isinstance(resp, str):
+        resp = make_response(resp)
+    resp.headers["Cache-Control"] = "public,must-revalidate,max-age=0,s-maxage=3600"
+    return resp
 
 
 def get_branding_context():

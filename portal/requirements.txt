@@ -1,4 +1,4 @@
-Flask==2.2.2
-Flask-Babel==2.0.0
-peewee==3.15.3
+Flask==2.3.2
+Flask-Babel==3.1.0
+peewee==3.16.2
 user-agents==2.2.0
