@@ -1,0 +1,116 @@
+# French translations for PROJECT.
+# Copyright (C) 2019 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-10-28 17:55+0000\n"
+"PO-Revision-Date: 2023-09-07 23:59-0600\n"
+"Last-Translator: reg <rgaudin@gmail.com>\n"
+"Language-Team: fr <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Generated-By: Babel 2.10.3\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: portal/templates/portal.html:4
+#, python-format
+msgid "Welcome to <em>%(hotspot_name)s</em> Hotspot."
+msgstr "Bienvenido al Hotspot <em>%(hotspot_name)s</em>."
+
+#: portal/templates/portal.html:5
+msgid "Access your content via: "
+msgstr "Acceda a su contenido vía: "
+
+#: portal/templates/portal.html:7
+msgid "Copy to clipboard"
+msgstr "Copiar al portapapeles"
+
+#: portal/templates/portal.html:10
+msgid ""
+"<strong>You need to <u>manually</u> go to</strong> (use copy-paste) that "
+"address as clicking on the button bellow might close this web page."
+msgstr ""
+"<strong>Necesita ir <u>manualmente</u> (utilice copia-pegar) a</"
+"strong> la dirección ya que el hacer clic en el botón podría cerrar esta "
+"página web."
+
+#: portal/templates/portal.html:14
+msgid ""
+"When browsing a secure website, your browser might display a "
+"<em>Security Warning</em> instead of displaying this page. Just open a "
+"new page onto a non-secure website to register again."
+msgstr ""
+"Al navegar un sitio seguro, su navegador podría mostrar una "
+"<em>Advertencia de Seguridad</em> en lugar de mostrar esta página. Solo "
+"necesita abrir una nueva página en un sitio no seguro para registrarse "
+"nuevamente."
+
+#: portal/templates/portal.html:15
+#, python-format
+msgid ""
+"You will be disconnected after %(interval)smn of inactivity: use this "
+"address to reconnect."
+msgstr ""
+"Será desconectado después de %(interval)smn de inactividad. Use ésta "
+"dirección para re-conectar."
+
+#: portal/templates/portal.html:18
+msgid "Got it!"
+msgstr "¡Comprendido!"
+
+#: portal/templates/registered.html:4
+msgid "You're all set!"
+msgstr "¡Está listo!"
+
+#: portal/templates/registered.html:6
+#, python-format
+msgid ""
+"Now open your web browser and go to <button class=\"clipboard pure-"
+"button pure-button-small pure-button-secondary\" data-clipboard-"
+"text=\"http://%(fqdn)s/\">\n"
+"    <svg aria-hidden=\"true\" height=\"16\" viewBox=\"0 0 16 16\" "
+"version=\"1.1\" width=\"16\" data-view-component=\"true\" "
+"class=\"copy\"><path fill-rule=\"evenodd\" d=\"M0 6.75C0 5.784.784 5 "
+"1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 "
+"00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 "
+"011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></"
+"path><path fill-rule=\"evenodd\" d=\"M5 1.75C5 .784 5.784 0 6.75 "
+"0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 "
+"0 015 9.25v-7.5zm1.75-.25a.25.25 0 "
+"00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 "
+"00-.25-.25h-7.5z\"></path></svg>\n"
+"    http://%(fqdn)s (Copy to clipboard)</button>"
+msgstr ""
+"Ahora abra su navegador web y vaya a <button class=\"clipboard pure-"
+"button pure-button-small pure-button-secondary\" data-clipboard-"
+"text=\"http://%(fqdn)s/\">\n"
+"    <svg aria-hidden=\"true\" height=\"16\" viewBox=\"0 0 16 16\" "
+"version=\"1.1\" width=\"16\" data-view-component=\"true\" "
+"class=\"copy\"><path fill-rule=\"evenodd\" d=\"M0 6.75C0 5.784.784 5 "
+"1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 "
+"00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 "
+"011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z\"></"
+"path><path fill-rule=\"evenodd\" d=\"M5 1.75C5 .784 5.784 0 6.75 "
+"0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 "
+"0 015 9.25v-7.5zm1.75-.25a.25.25 0 "
+"00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 "
+"00-.25-.25h-7.5z\"></path></svg>\n"
+"    http://%(fqdn)s (Copias al portapapeles)</button>"
+
+#: portal/templates/registered.html:10
+#, python-format
+msgid "You're now ready to access <em>%(hotspot_name)s's content</em>."
+msgstr ""
+"Ahora está listo para acceder al <em>contenido de %(hotspot_name)s</em>."
+
+#: portal/templates/registered.html:11
+#, python-format
+msgid "Go to %(fqdn)s"
+msgstr "Vaya a %(fqdn)s"
