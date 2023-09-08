@@ -16,7 +16,7 @@ def get_locale():
     """select locale from HTTP Accept-Languages header value
 
     Dropping regional specifier as we handle offer bare-language translations"""
-    supported_languages = ["fr", "en"]
+    supported_languages = ["fr", "es", "en"]
     try:
         return werkzeug.datastructures.LanguageAccept(
             [(al[0].split("-", 1)[0], al[1]) for al in request.accept_languages]
