@@ -14,17 +14,17 @@ class Config:
     name: str = os.getenv("HOTSPOT_NAME", "default")
     fqdn: str = os.getenv("HOTSPOT_FQDN", "default.hotspot")
     timeout_mn: int = int(os.getenv("TIMEOUT", "60"))  # 1h default
-    footer_note: str = os.getenv("FOOTER_NOTE")
+    footer_note: str = os.getenv("FOOTER_NOTE", "")
 
     # impl & debug
-    debug: bool = os.getenv("DEBUG", False)
-    db_path: pathlib = pathlib.Path(os.getenv("DB_PATH", "portal-users.db"))
+    debug: bool = bool(os.getenv("DEBUG", False))
+    db_path: pathlib.Path = pathlib.Path(os.getenv("DB_PATH", "portal-users.db"))
     filter_module: str = os.getenv("FILTER_MODULE", "dummy_portal_filter")
 
     # internal
     logger: logging.Logger = logging.getLogger("home-portal")
     root: pathlib.Path = pathlib.Path(__file__).parent
-    _filter_module: Callable = None
+    _filter_module: Callable | None = None
 
     def __post_init__(self):
         if self.debug:
