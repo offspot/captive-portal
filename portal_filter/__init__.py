@@ -44,7 +44,6 @@ PORTAL_IP: str = os.getenv("HOTSPOT_IP", "192.168.2.1")
 HTTP_PORT: int = int(os.getenv("HTTP_PORT", "2080"))
 HTTPS_PORT: int = int(os.getenv("HTTP_PORT", "2443"))
 CAPTURED_NETWORKS: List[str] = os.getenv("CAPTURED_NETWORKS", "").split("|")
-ALWAYS_ONLINE: bool = bool(os.getenv("ALWAYS_ONLINE", ""))
 
 ######################
 # portal-filter API: start
@@ -64,10 +63,6 @@ def ack_client_registration(ip_addr: str) -> bool:
     """whether ip_addr has been added to CAPTIVE_PASSLIST chain (if not present)
 
     rule is INSERTED so it's passed before the end-of-chain's RETURN"""
-
-    # dont add rule should the system be offline
-    if not ALWAYS_ONLINE and not system_is_online():
-        return False
 
     # check that it's not already present
     if ip_in_passlist(ip_addr):
@@ -100,12 +95,6 @@ def is_client_active(ip_addr: str) -> bool:
         return False
 
     return has_active_connection(ip_addr)
-
-    # # dont look into passlist when system is offline
-    # if not ALWAYS_ONLINE and not system_is_online():
-    #     return has_active_connection(ip_addr)
-
-    # return ip_in_passlist(ip_addr) and has_active_connection(ip_addr)
 
 
 ######################

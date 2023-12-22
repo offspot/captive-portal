@@ -8,6 +8,7 @@ from portal.constants import Conf
 Conf.db_path.parent.mkdir(parents=True, exist_ok=True)
 portal_db = peewee.SqliteDatabase(str(Conf.db_path))
 is_client_active = Conf.get_filter_func("is_client_active")
+ip_in_passlist = Conf.get_filter_func("ip_in_passlist")
 
 
 class User(peewee.Model):
@@ -38,6 +39,10 @@ class User(peewee.Model):
     def is_registered(self) -> bool:
         if not self.registered_on:
             return False
+
+        if not ip_in_passlist(self.ip_addr):
+            return False
+
         now = datetime.datetime.now()
         return (
             now > self.registered_on

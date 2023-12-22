@@ -34,12 +34,16 @@ Version `1.0.0` has been tested with the following platforms
 | macOS 11 Big Sur       | ✅            |                     |
 | macOS 12 Monterey      | ✅            |                     |
 | macOS 13 Ventura       | ✅            |                     |
+| macOS 14 Sonoma        | ✅            |                     |
 | iOS 16.1               | ✅            |                     |
+| iOS 17.1               | ✅            |                     |
 | Ubuntu 22.10           | ✅ (no popup) |                     |
+| Debian 12              | ✅ (no popup) |                     |
 | Fedora 37              | ✅ (no popup) |                     |
-| Firefox 106            | ✅            |                     |
+| Firefox 106-120        | ✅            |                     |
 | Android 13             | ✅            |                     |
 | Windows 10 20H2        | ✅            |                     |
+| Windows 11 21H2        | ✅            |                     |
 | Windows 11 21H2        | ✅            |                     |
 
 Should you encounter a system for which it doesn't work, please [Open a ticket](https://github.com/offspot/home-portal-app/issues/new/choose) specifying the System and its Version.
@@ -144,4 +148,3 @@ Configuration is done solely via environment variables
 | `CAPTURED_NETWORKS`  |               | List of `|` separated networks to limit *capture* to. Otherwise any traffic |
 | `HTTP_PORT`          | `2080`        | Port to redirect captured HTTP traffic to on *HOTSPOT_IP*                   |
 | `HTTPS_PORT`         | `2443`        | Port to redirect captured HTTPS traffic to on *HOTSPOT_IP*                  |
-| `ALWAYS_ONLINE`      |               | Assumes system should be connected to Internet and route traffic            |

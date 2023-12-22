@@ -31,7 +31,7 @@ class Config:
             self.logger.setLevel(logging.DEBUG)
 
         if self.filter_module:
-            self.logger.info("importing {self.filter_module} into _filter_module")
+            self.logger.info(f"importing {self.filter_module} into _filter_module")
             self._filter_module = importlib.import_module(self.filter_module)
 
     @property

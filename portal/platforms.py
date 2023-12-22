@@ -36,6 +36,7 @@ GOOGLE_HOSTS = [
     "connectivitycheck.android.com",
     "connectivitycheck.gstatic.com",
     "developers.google.cn",
+    "play.googleapis.com",
 ]
 
 LINUX_HOSTS = ["connectivity-check.ubuntu.com", "nmcheck.gnome.org"]
@@ -124,9 +125,10 @@ def ubuntu_success(request, user):
     return resp
 
 
-def no_content(request, user):
+def google_no_content(request, user):
     """HTTP 1.1/204 No Content"""
     resp = flask.make_response("", 204)
+    resp.headers["Server"] = "gws"
     return resp
 
 
@@ -151,7 +153,7 @@ def success(request, user):
         return ubuntu_success(request, user)
     elif is_google_request(request):
         logger.debug("is_google_request")
-        return no_content(request, user)
+        return google_no_content(request, user)
 
     # default to regular 204
     logger.debug("is_default")
