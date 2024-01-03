@@ -119,12 +119,11 @@ def action_required(user: User) -> bool:
     # windows just opens a full regular browser
     return user.platform.lower() not in ("apple", "macos", "iphone", "ipad", "windows")
 
-
 @app.route("/", defaults={"u_path": ""})
 @app.route("/<path:u_path>")
 def entrypoint(u_path):
     req = Request(request)
-    logger.info(f"IN: {req}")
+    logger.debug(f"IN: {req}")
     user = req.get_user()
     context = dict(
         user=user, action_required=action_required(user), **get_branding_context()
@@ -147,6 +146,7 @@ def entrypoint(u_path):
 @app.route("/fake-register")
 def fake_register():
     """just display registered page, for UI testing purpose"""
+    logger.debug(f"FAKE-REG: {Request(request)}")
     user = Request(request).get_user()
     context = dict(
         user=user, action_required=action_required(user), **get_branding_context()
@@ -157,9 +157,10 @@ def fake_register():
 @app.route("/register")
 def register():
     """record that user passed portal and should be considered online and informed"""
+    logger.debug(f"REG: {Request(request)}")
     user = Request(request).get_user()
     user.register()
-    ack_client_registration(user.ip_addr)
+    ack_client_registration(ip_addr=user.ip_addr)
     context = dict(
         user=user, action_required=action_required(user), **get_branding_context()
     )
@@ -169,4 +170,5 @@ def register():
 @app.route("/assets/<path:path>")
 def send_static(path):
     """serve static files during devel (deployed reverseproxy)"""
+    logger.debug(f"ASSETS: {Request(request)}")
     return std_resp(flask.send_from_directory(Conf.root.joinpath("assets"), path))

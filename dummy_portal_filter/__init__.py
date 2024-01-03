@@ -27,3 +27,8 @@ def get_identifier_for(**kwargs) -> str:
 def is_client_active(**kwargs) -> bool:
     logger.info(f"called get_identifier_for with {kwargs=}")
     return False
+
+def ip_in_passlist(**kwargs) -> bool:
+    logger.info(f"called ip_in_passlist with {kwargs=}")
+    return False
+

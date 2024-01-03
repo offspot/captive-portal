@@ -40,7 +40,7 @@ class User(peewee.Model):
         if not self.registered_on:
             return False
 
-        if not ip_in_passlist(self.ip_addr):
+        if not ip_in_passlist(ip_addr=self.ip_addr):
             return False
 
         now = datetime.datetime.now()
