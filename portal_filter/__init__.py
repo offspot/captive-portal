@@ -45,6 +45,7 @@ PORTAL_IP: str = os.getenv("HOTSPOT_IP", "192.168.2.1")
 HTTP_PORT: int = int(os.getenv("HTTP_PORT", "2080"))
 HTTPS_PORT: int = int(os.getenv("HTTP_PORT", "2443"))
 CAPTURED_NETWORKS: List[str] = os.getenv("CAPTURED_NETWORKS", "").split("|")
+CAPTURED_ADDRESS: str = os.getenv("CAPTURED_ADDRESS", "") or "198.51.100.1/32"
 
 ######################
 # portal-filter API: start
@@ -63,14 +64,15 @@ def initial_setup(**kwargs):
 def ack_client_registration(ip_addr: str) -> bool:
     """whether ip_addr has been added to CAPTIVE_PASSLIST chain (if not present)
 
-    rule is INSERTED so it's passed before the end-of-chain's RETURN"""
+    rule is INSERTED so it's passed before the end-of-chain's RETURN
+    but AFTER the first two rules that allow CAPTURED_ADDRESS to work"""
 
     # check that it's not already present
     if ip_in_passlist(ip_addr):
         return False
 
     result = query_netfilter(
-        f"insert rule ip nat CAPTIVE_PASSLIST ip saddr {ip_addr} "
+        f"insert rule ip nat CAPTIVE_PASSLIST index 2 ip saddr {ip_addr} "
         + 'counter accept comment "allow host"'
     )
     return result.succeeded
@@ -223,6 +225,17 @@ def setup_capture(hotspot_ip: str, captured_networks: List[str]):
             + f"counter dnat to {hotspot_ip}:{port} "
             + f'comment "redirect HTTP(s) traffic to hotspot server port {port}"'
         )
+
+    # make sure to return if targetting captured_address before the accept rules
+    # per client. Those must be the first two rules (indexes 0 and 1)
+    rules.append(
+        f"add rule ip nat CAPTIVE_PASSLIST ip daddr {CAPTURED_ADDRESS} tcp dport 80 "
+        + 'counter return comment "return derived addr to calling chain (captive_http)"'
+    )
+    rules.append(
+        f"add rule ip nat CAPTIVE_PASSLIST ip daddr {CAPTURED_ADDRESS} tcp dport 443 "
+        + 'counter return comment "return derived addr to calling chain (captive_https)"'
+    )
 
     # registered host have an inserted rule in CAPTIVE_PASSLIST to ACCEPT based on IP
     # RETURN to calling chain at end of CAPTIVE_PASSLIST

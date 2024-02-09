@@ -104,7 +104,7 @@ To trigger the UI, we redirect all HTTP/s requests to our IP on port `2080`/`244
 
 - http/s packets from captured networks and not for hotspot are sent to `CAPTIVE_HTTP` and `CAPTIVE_HTTPS` chains
 - if source ip is in `CAPTIVE_PASSLIST` chain, it is accepted
-- if not, its redirected to `hotspot_ip:2080` or `hotspot_ip:2443`
+- if not or destination is `CAPTURED_ADDRESS`, it is redirected to `hotspot_ip:2080` or `hotspot_ip:2443`
 
 Portal UI calls back once its user is *registered* and we add its IP to `CAPTIVE_PASSLIST`
 
@@ -131,8 +131,10 @@ table ip nat { # handle 1
     }
 
     chain CAPTIVE_PASSLIST { # handle 5
-        ip saddr 192.168.2.174 counter packets 3 bytes 192 accept comment "allow host" # handle 13
-        ip protocol tcp counter packets 9951 bytes 634194 return comment "return non-accepted to calling chain (captive_httpx)" # handle 12
+        ip daddr 192.51.100.1 tcp dport 80 counter packets 0 bytes 0 return comment "return derived addr to calling chain (captive_http)" # handle 12
+        ip daddr 192.51.100.1 tcp dport 443 counter packets 0 bytes 0 return comment "return derived addr to calling chain (captive_https)" # handle 13
+        ip saddr 192.168.2.174 counter packets 3 bytes 192 accept comment "allow host" # handle 15
+        ip protocol tcp counter packets 9951 bytes 634194 return comment "return non-accepted to calling chain (captive_httpx)" # handle 14
     }
 }
 ```
@@ -146,5 +148,6 @@ Configuration is done solely via environment variables
 | -------------------- | ------------- | --------------------------------------------------------------------------- |
 | `HOSTPOT_IP`         | `192.168.2.1` | IP to redirect unregistered HTTP traffic to                                 |
 | `CAPTURED_NETWORKS`  |               | List of `|` separated networks to limit *capture* to. Otherwise any traffic |
+| `CAPTURED_ADDRESS`   | `192.51.100.1`| IP address to which HTTP/S traffic must be redirected to portal.            |
 | `HTTP_PORT`          | `2080`        | Port to redirect captured HTTP traffic to on *HOTSPOT_IP*                   |
 | `HTTPS_PORT`         | `2443`        | Port to redirect captured HTTPS traffic to on *HOTSPOT_IP*                  |
