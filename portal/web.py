@@ -101,9 +101,11 @@ class Request:
             "system_version": user_agent.os.version_string or None,
             "browser": other_as_none(user_agent.browser.family),
             "browser_version": user_agent.browser.version_string or None,
-            "language": str(self.req.accept_languages).split(",")[0]
-            if self.req.accept_languages
-            else None,
+            "language": (
+                str(self.req.accept_languages).split(",")[0]
+                if self.req.accept_languages
+                else None
+            ),
         }
 
     def get_user(self):
@@ -118,6 +120,7 @@ def action_required(user: User) -> bool:
     # apple brings a popup that allows link (target=_system) to open a browser
     # windows just opens a full regular browser
     return user.platform.lower() not in ("apple", "macos", "iphone", "ipad", "windows")
+
 
 @app.route("/", defaults={"u_path": ""})
 @app.route("/<path:u_path>")

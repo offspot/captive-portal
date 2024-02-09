@@ -82,8 +82,8 @@ def is_firefox_request(request):
 def apple_success(request, user):
     """Fake apple Success page (200 with body containing Success)"""
     return flask.make_response(
-            "<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>"
-        )
+        "<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>"
+    )
 
 
 def firefox_success(request, user):

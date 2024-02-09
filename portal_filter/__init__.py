@@ -29,6 +29,7 @@ if platform.system() != "Linux":
     raise NotImplementedError(f"{platform.system()} is not supported. Linux only")
 
 import nftables
+
 try:
     import scapy.all
 except OSError as exc:
@@ -69,8 +70,8 @@ def ack_client_registration(ip_addr: str) -> bool:
         return False
 
     result = query_netfilter(
-        f"insert rule ip nat CAPTIVE_PASSLIST ip saddr {ip_addr} " +
-        'counter accept comment "allow host"'
+        f"insert rule ip nat CAPTIVE_PASSLIST ip saddr {ip_addr} "
+        + 'counter accept comment "allow host"'
     )
     return result.succeeded
 
@@ -98,6 +99,7 @@ def is_client_active(ip_addr: str) -> bool:
 
 
 ######################
+
 
 def system_is_online() -> bool:
     """whether system has internet connectivity"""
@@ -181,14 +183,14 @@ def setup_capture(hotspot_ip: str, captured_networks: List[str]):
 
     if not captured_networks:
         rules.append(
-            f"add rule ip nat PREROUTING ip daddr != {hotspot_ip} tcp " +
-            "dport 80 counter jump CAPTIVE_HTTP " +
-            'comment "Captured HTTP traffic to CAPTIVE_HTTP"'
+            f"add rule ip nat PREROUTING ip daddr != {hotspot_ip} tcp "
+            + "dport 80 counter jump CAPTIVE_HTTP "
+            + 'comment "Captured HTTP traffic to CAPTIVE_HTTP"'
         )
         rules.append(
-            f"add rule ip nat PREROUTING ip daddr != {hotspot_ip} tcp " +
-            "dport 443 counter jump CAPTIVE_HTTPS " +
-            'comment "Captured HTTPS traffic to CAPTIVE_HTTPS"'
+            f"add rule ip nat PREROUTING ip daddr != {hotspot_ip} tcp "
+            + "dport 443 counter jump CAPTIVE_HTTPS "
+            + 'comment "Captured HTTPS traffic to CAPTIVE_HTTPS"'
         )
     else:
         # Forward HTTP(s) traffic on captured network to CAPTIVE_HTTP(s)
@@ -196,38 +198,37 @@ def setup_capture(hotspot_ip: str, captured_networks: List[str]):
             # add rule ip nat PREROUTING ip saddr 192.168.2.128/25 \
             # ip daddr != 192.168.2.1 tcp dport 80 counter jump CAPTIVE_HTTP
             rules.append(
-                f"add rule ip nat PREROUTING ip saddr {network} tcp " +
-                "dport 80 counter jump CAPTIVE_HTTP " +
-                'comment "Captured HTTP traffic to CAPTIVE_HTTP"'
+                f"add rule ip nat PREROUTING ip saddr {network} tcp "
+                + "dport 80 counter jump CAPTIVE_HTTP "
+                + 'comment "Captured HTTP traffic to CAPTIVE_HTTP"'
             )
             rules.append(
-                f"add rule ip nat PREROUTING ip saddr {network} tcp " +
-                "dport 443 counter jump CAPTIVE_HTTPS " +
-                'comment "Captured HTTPS traffic to CAPTIVE_HTTPS"'
+                f"add rule ip nat PREROUTING ip saddr {network} tcp "
+                + "dport 443 counter jump CAPTIVE_HTTPS "
+                + 'comment "Captured HTTPS traffic to CAPTIVE_HTTPS"'
             )
 
     # Move from CAPTIVE_HTTP(s) to CAPTIVE_PASSLIST
     for chain in ("CAPTIVE_HTTP", "CAPTIVE_HTTPS"):
         rules.append(
-            f"add rule ip nat {chain} ip protocol tcp " +
-            "counter jump CAPTIVE_PASSLIST " +
-            'comment "Jump to CAPTIVE_PASSLIST to try to escape filtering"'
+            f"add rule ip nat {chain} ip protocol tcp "
+            + "counter jump CAPTIVE_PASSLIST "
+            + 'comment "Jump to CAPTIVE_PASSLIST to try to escape filtering"'
         )
 
     # DNAT from CAPTIVE_HTTP(s) to hotspot_ip:80/443
     for chain, port in (("CAPTIVE_HTTP", HTTP_PORT), ("CAPTIVE_HTTPS", HTTPS_PORT)):
         rules.append(
-            f"add rule ip nat {chain} ip protocol tcp " +
-            f"counter dnat to {hotspot_ip}:{port} " +
-            f'comment "redirect HTTP(s) traffic to hotspot server port {port}"'
+            f"add rule ip nat {chain} ip protocol tcp "
+            + f"counter dnat to {hotspot_ip}:{port} "
+            + f'comment "redirect HTTP(s) traffic to hotspot server port {port}"'
         )
 
     # registered host have an inserted rule in CAPTIVE_PASSLIST to ACCEPT based on IP
-
     # RETURN to calling chain at end of CAPTIVE_PASSLIST
     rules.append(
-        "add rule ip nat CAPTIVE_PASSLIST ip protocol tcp " +
-        'counter return comment "return non-accepted to calling chain (captive_httpx)"'
+        "add rule ip nat CAPTIVE_PASSLIST ip protocol tcp "
+        + 'counter return comment "return non-accepted to calling chain (captive_httpx)"'
     )
 
     return query_netfilter_bulk(rules)
