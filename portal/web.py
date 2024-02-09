@@ -146,7 +146,7 @@ def entrypoint(u_path):
     return std_resp(render_template("portal.html", **context))
 
 
-@app.route("/fake-register")
+@app.route("/fake-register/")
 def fake_register():
     """just display registered page, for UI testing purpose"""
     logger.debug(f"FAKE-REG: {Request(request)}")
@@ -157,7 +157,7 @@ def fake_register():
     return std_resp(render_template("registered.html", **context))
 
 
-@app.route("/register")
+@app.route("/register/")
 def register():
     """record that user passed portal and should be considered online and informed"""
     logger.debug(f"REG: {Request(request)}")
