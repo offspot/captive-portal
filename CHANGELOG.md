@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- `CAPTURED_ADDRESS` env defaulting to `192.51.100.1` to identify traffic that must be captured
+- `CAPTURED_ADDRESS` env defaulting to `198.51.100.1` to identify traffic that must be captured
 - CAPTIVE_PASSLIST chain now starts with return rule for captured-address so it always ends up in portal
 
 ### Changed

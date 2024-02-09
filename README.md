@@ -131,8 +131,8 @@ table ip nat { # handle 1
     }
 
     chain CAPTIVE_PASSLIST { # handle 5
-        ip daddr 192.51.100.1 tcp dport 80 counter packets 0 bytes 0 return comment "return derived addr to calling chain (captive_http)" # handle 12
-        ip daddr 192.51.100.1 tcp dport 443 counter packets 0 bytes 0 return comment "return derived addr to calling chain (captive_https)" # handle 13
+        ip daddr 198.51.100.1 tcp dport 80 counter packets 0 bytes 0 return comment "return derived addr to calling chain (captive_http)" # handle 12
+        ip daddr 198.51.100.1 tcp dport 443 counter packets 0 bytes 0 return comment "return derived addr to calling chain (captive_https)" # handle 13
         ip saddr 192.168.2.174 counter packets 3 bytes 192 accept comment "allow host" # handle 15
         ip protocol tcp counter packets 9951 bytes 634194 return comment "return non-accepted to calling chain (captive_httpx)" # handle 14
     }
@@ -148,6 +148,6 @@ Configuration is done solely via environment variables
 | -------------------- | ------------- | --------------------------------------------------------------------------- |
 | `HOSTPOT_IP`         | `192.168.2.1` | IP to redirect unregistered HTTP traffic to                                 |
 | `CAPTURED_NETWORKS`  |               | List of `|` separated networks to limit *capture* to. Otherwise any traffic |
-| `CAPTURED_ADDRESS`   | `192.51.100.1`| IP address to which HTTP/S traffic must be redirected to portal.            |
+| `CAPTURED_ADDRESS`   | `198.51.100.1`| IP address to which HTTP/S traffic must be redirected to portal.            |
 | `HTTP_PORT`          | `2080`        | Port to redirect captured HTTP traffic to on *HOTSPOT_IP*                   |
 | `HTTPS_PORT`         | `2443`        | Port to redirect captured HTTPS traffic to on *HOTSPOT_IP*                  |
