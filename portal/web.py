@@ -157,7 +157,7 @@ def fake_register():
     return std_resp(render_template("registered.html", **context))
 
 
-@app.route("/register/")
+@app.route("/register-hotspot/")
 def register():
     """record that user passed portal and should be considered online and informed"""
     logger.debug(f"REG: {Request(request)}")
