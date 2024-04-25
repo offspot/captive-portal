@@ -175,3 +175,9 @@ def send_static(path):
     """serve static files during devel (deployed reverseproxy)"""
     logger.debug(f"ASSETS: {Request(request)}")
     return std_resp(flask.send_from_directory(Conf.root.joinpath("assets"), path))
+
+
+@app.route("/branding/<path:path>")
+def send_static_branding(path):
+    """serve static branding files during devel (deployed reverseproxy)"""
+    return std_resp(flask.send_from_directory(Conf.root.joinpath("branding"), path))
