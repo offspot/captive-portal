@@ -61,11 +61,10 @@ header {
     display: -webkit-flex;
     display: flex;
     width: 100%;
-    padding: 1em .5em;
+    padding: .5em .5em;
     background-color: #fefefe;
     color: #333;
     border-bottom: 1px solid #eee;
-    margin-bottom: 40px;
 }
 
 header * img {
@@ -90,7 +89,7 @@ svg.copy {
 footer {
     padding: .5em;
     color: #fefefe;
-    background-color: #95A5A6;
+    background-color: rgb(243, 147, 37);
     margin-top: 3em;
     width: 100%;
     height: auto;
