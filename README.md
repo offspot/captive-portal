@@ -54,7 +54,7 @@ Configuration is done solely via environment variables
 
 | Variable            | Default               | Usage                                                             |
 | ------------------- | --------------------- | ----------------------------------------------------------------- |
-| `HOTSPOT_NAME`      | `default`             | Name of the hotspot, displayed on portal and as title             |
+| `HOTSPOT_NAME`      | `Kiwix Hotspot`       | Name of the hotspot or SSID, displayed on portal and as title     |
 | `HOTSPOT_FQDN`      | `default.hotspot`     | URL (hostname actualy) to point users to.                         |
 | `TIMEOUT`           | `60`                  | Minutes after which to consider an *inactive* client unregistered |
 | `FOOTER_NOTE`       |                       | Small text displayed on footer of portal                          |

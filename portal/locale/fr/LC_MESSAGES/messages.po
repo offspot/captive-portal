@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-10-28 17:55+0000\n"
-"PO-Revision-Date: 2022-10-28 17:55+0000\n"
+"POT-Creation-Date: 2025-02-18 13:49+0000\n"
+"PO-Revision-Date: 2025-02-18 13:49+0000\n"
 "Last-Translator: reg <rgaudin@gmail.com>\n"
 "Language-Team: fr <LL@li.org>\n"
 "Language: fr\n"
@@ -16,17 +16,17 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Generated-By: Babel 2.10.3\n"
+"Generated-By: Babel 2.14.0\n"
 "X-Generator: Poedit 3.1\n"
 
 #: portal/templates/portal.html:4
 #, python-format
-msgid "Welcome to <em>%(hotspot_name)s</em> Hotspot."
-msgstr "Bienvenue sur le Hotspot <em>%(hotspot_name)s</em>."
+msgid "Welcome to <em>%(hotspot_name)s</em>"
+msgstr "Bienvenue sur <em>%(hotspot_name)s</em>"
 
 #: portal/templates/portal.html:5
 msgid "Access your content via: "
-msgstr "Accédez aux contenus via :"
+msgstr "Accédez aux contenus via : "
 
 #: portal/templates/portal.html:7
 msgid "Copy to clipboard"
@@ -38,7 +38,7 @@ msgid ""
 "address as clicking on the button bellow might close this web page."
 msgstr ""
 "<strong>Vous devez <u>manuellement</u> (utilisez le copier-coller) aller "
-"à</strong> cette addresse car après avoir cliqué sur le bouton ci-"
+"à</strong> cette adresse car après avoir cliqué sur le bouton ci-"
 "dessous, cette page risque de se fermer."
 
 #: portal/templates/portal.html:14
@@ -58,7 +58,7 @@ msgid ""
 "You will be disconnected after %(interval)smn of inactivity: use this "
 "address to reconnect."
 msgstr ""
-"Vous serez déconnecté après %(interval)smn d'innactivité. Utilisez cette "
+"Vous serez déconnecté après %(interval)smn d'inactivité. Utilisez cette "
 "adresse pour vous reconnecter."
 
 #: portal/templates/portal.html:18
@@ -88,6 +88,20 @@ msgid ""
 "00-.25-.25h-7.5z\"></path></svg>\n"
 "    http://%(fqdn)s (Copy to clipboard)</button>"
 msgstr ""
+"Maintenant, ouvrez votre navigateur web et allez à <button "
+"class=“clipboard pure-button pure-button-small pure-button-secondary” "
+"data-clipboard-text=“http://%(fqdn)s/“>\n"
+"    <svg aria-hidden=“true” height=“16” viewBox=“0 0 16 16” "
+"version=“1.1” width=“16” data-view-component=“true” class=“copy”><path "
+"fill-rule=“evenodd” d=“M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 "
+"1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 "
+"00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 "
+"0 010 14.25v-7.5z”></path><path fill-rule=“evenodd” d=“M5 1.75C5 .784 "
+"5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 "
+"11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 "
+"00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 "
+"00-.25-.25h-7.5z”></path></svg>\n"
+"    http://%(fqdn)s (Copy l’adresse)</button>"
 
 #: portal/templates/registered.html:10
 #, python-format
