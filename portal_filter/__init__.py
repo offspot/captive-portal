@@ -1,18 +1,18 @@
-""" netfilter-based captive-portal mechanism
+"""netfilter-based captive-portal mechanism
 
-    PARAMS:
-        - HOSTPOT_IP environ to redirect captured http(s) requests to
-        - CAPTURED_NETWORKS environ to restrict capture to specific networks
+PARAMS:
+    - HOSTPOT_IP environ to redirect captured http(s) requests to
+    - CAPTURED_NETWORKS environ to restrict capture to specific networks
 
-    Behavior:
-    - http(s) packets from captured net and not for hotspot are sent to captive_x chain
-    - if source ip is in captive_passlist chain, it is accepted
-    - if not, its redirected to hotspot:2080/2443
+Behavior:
+- http(s) packets from captured net and not for hotspot are sent to captive_x chain
+- if source ip is in captive_passlist chain, it is accepted
+- if not, its redirected to hotspot:2080/2443
 
-    Portal UI calls back once its user is *registered* and we add its IP to passlist
+Portal UI calls back once its user is *registered* and we add its IP to passlist
 
-    A periodic clean-up of passlist is expected as device-clients are expected
-    to be used by various users over time
+A periodic clean-up of passlist is expected as device-clients are expected
+to be used by various users over time
 """
 
 import collections
@@ -20,6 +20,7 @@ import ipaddress
 import json
 import logging
 import os
+import pathlib
 import platform
 import subprocess
 import time
@@ -46,6 +47,8 @@ HTTP_PORT: int = int(os.getenv("HTTP_PORT", "2080"))
 HTTPS_PORT: int = int(os.getenv("HTTP_PORT", "2443"))
 CAPTURED_NETWORKS: List[str] = os.getenv("CAPTURED_NETWORKS", "").split("|")
 CAPTURED_ADDRESS: str = os.getenv("CAPTURED_ADDRESS", "") or "198.51.100.1/32"
+
+INTERNET_STATUS_FILE = pathlib.Path("/var/run/internet")
 
 ######################
 # portal-filter API: start
@@ -106,8 +109,7 @@ def is_client_active(ip_addr: str) -> bool:
 def system_is_online() -> bool:
     """whether system has internet connectivity"""
     try:
-        with open("/var/run/internet", "r") as fh:
-            return fh.read().strip() == "online"
+        return INTERNET_STATUS_FILE.read_text().strip() == "online"
     except Exception as exc:
         logger.error(f"cannot read connectivity status: {exc}")
         return False
@@ -276,6 +278,7 @@ def has_active_connection(ip_addr: str) -> bool:
         ],
         text=True,
         capture_output=True,
+        check=False,
     )
     return bool(ps.returncode == 0 and ps.stdout.strip())
 

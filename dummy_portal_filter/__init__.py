@@ -1,7 +1,7 @@
-""" dummy portal filter
+"""dummy portal filter
 
-    Implements the portal filter API yet doing nothing.
-    Usefull for web-app development """
+Implements the portal filter API yet doing nothing.
+Usefull for web-app development"""
 
 import logging
 
