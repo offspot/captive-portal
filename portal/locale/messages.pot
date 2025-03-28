@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-26 13:52+0000\n"
+"POT-Creation-Date: 2025-03-28 10:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,16 +38,16 @@ msgstr ""
 
 #: portal/templates/portal.html:14
 msgid ""
-"When browsing a secure website, your browser might display a <em>Security"
-" Warning</em> instead of displaying this page. Just open a new page onto "
-"a non-secure website to register again."
+"You may see a security warning when accessing secure websites if the "
+"Kiwix Hotspot is offline. To avoid this, return to the hotspot's main "
+"page linked above."
 msgstr ""
 
 #: portal/templates/portal.html:15
 #, python-format
 msgid ""
-"You will be disconnected after %(interval)smn of inactivity: use this "
-"address to reconnect."
+"You will be disconnected after %(interval)s minutes of inactivity. To "
+"reconnect, simply visit http://%(fqdn)s/ in your browser again."
 msgstr ""
 
 #: portal/templates/portal.html:18

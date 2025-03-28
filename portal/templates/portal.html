@@ -11,8 +11,8 @@
 <hr />
 {% endif %}
 <ul>
-<li>{% trans %}When browsing a secure website, your browser might display a <em>Security Warning</em> instead of displaying this page. Just open a new page onto a non-secure website to register again.{% endtrans %}</li>
-<li>{% trans interval=interval|int %}You will be disconnected after {{ interval }}mn of inactivity: use this address to reconnect.{% endtrans %}</li>
+<li>{% trans %}You may see a security warning when accessing secure websites if the Kiwix Hotspot is offline. To avoid this, return to the hotspot's main page linked above.{% endtrans %}</li>
+<li>{% trans interval=interval|int, fqdn=fqdn|str %}You will be disconnected after {{ interval }} minutes of inactivity. To reconnect, simply visit http://{{ fqdn }}/ in your browser again.{% endtrans %}</li>
 </ul>
 
 <p><a class="pure-button pure-button-primary" href="/register-hotspot/">{% trans %}Confirm{% endtrans %}</a></p>
