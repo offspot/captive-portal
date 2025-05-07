@@ -12,7 +12,7 @@
 {% endif %}
 <ul>
 <li>{% trans %}You may see a security warning when accessing secure websites if the Kiwix Hotspot is offline. To avoid this, return to the hotspot's main page linked above.{% endtrans %}</li>
-<li>{% trans interval=interval|int, fqdn=fqdn|str %}You will be disconnected after {{ interval }} minutes of inactivity. To reconnect, simply visit http://{{ fqdn }}/ in your browser again.{% endtrans %}</li>
+<li>{% trans interval=interval|int, fqdn=fqdn %}You will be disconnected after {{ interval }} minutes of inactivity. To reconnect, simply visit http://{{ fqdn }}/ in your browser again.{% endtrans %}</li>
 </ul>
 
 <p><a class="pure-button pure-button-primary" href="/register-hotspot/">{% trans %}Confirm{% endtrans %}</a></p>
