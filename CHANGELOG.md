@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Favicon
 
+### Changed
+
+- Updated dependencies (scapy, Flask, peewee)
+
 ## [1.6.0] - 2025-06-04
 
 ### Changed
